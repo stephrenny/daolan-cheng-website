@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Daolan Cheng Insurance | Your Trusted Insurance Broker</title>
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --navy: #1a2744;
+      --blue: #2563eb;
+      --blue-light: #3b82f6;
+      --gold: #d4a843;
+      --gray-50: #f8fafc;
+      --gray-100: #f1f5f9;
+      --gray-200: #e2e8f0;
+      --gray-600: #475569;
+      --gray-700: #334155;
+      --gray-900: #0f172a;
+      --white: #ffffff;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      color: var(--gray-700);
+      line-height: 1.6;
+    }
+
+    a { text-decoration: none; color: inherit; }
+
+    /* --- NAV --- */
+    nav {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background: var(--white);
+      box-shadow: 0 1px 3px rgba(0,0,0,.1);
+      z-index: 1000;
+    }
+    .nav-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 72px;
+    }
+    .logo {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--navy);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .logo .shield { color: var(--blue); font-size: 1.6rem; }
+    .nav-links { display: flex; gap: 32px; list-style: none; }
+    .nav-links a {
+      font-size: .95rem;
+      font-weight: 500;
+      color: var(--gray-600);
+      transition: color .2s;
+    }
+    .nav-links a:hover { color: var(--blue); }
+    .nav-cta {
+      background: var(--blue);
+      color: var(--white);
+      padding: 10px 24px;
+      border-radius: 6px;
+      font-weight: 600;
+      font-size: .95rem;
+      border: none;
+      cursor: pointer;
+      transition: background .2s;
+    }
+    .nav-cta:hover { background: var(--blue-light); }
+    .menu-toggle { display: none; background: none; border: none; font-size: 1.5rem; cursor: pointer; }
+    .nav-right { display: flex; align-items: center; gap: 16px; }
+    .lang-toggle {
+      display: flex;
+      align-items: center;
+      background: var(--gray-100);
+      border-radius: 20px;
+      padding: 4px;
+      cursor: pointer;
+      border: none;
+      font-size: .85rem;
+      font-weight: 600;
+      position: relative;
+      gap: 0;
+    }
+    .lang-toggle span {
+      padding: 5px 14px;
+      border-radius: 16px;
+      transition: background .25s, color .25s;
+      z-index: 1;
+      user-select: none;
+      color: var(--gray-600);
+    }
+    .lang-toggle span.active {
+      background: var(--blue);
+      color: var(--white);
+    }
+
+    /* --- HERO --- */
+    .hero {
+      padding: 160px 24px 100px;
+      background: linear-gradient(135deg, var(--navy) 0%, #243b63 100%);
+      color: var(--white);
+      text-align: center;
+    }
+    .hero h1 {
+      font-size: 3rem;
+      font-weight: 800;
+      line-height: 1.2;
+      max-width: 720px;
+      margin: 0 auto 20px;
+    }
+    .hero p {
+      font-size: 1.2rem;
+      max-width: 560px;
+      margin: 0 auto 36px;
+      opacity: .85;
+    }
+    .hero-buttons { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+    .btn-primary {
+      background: var(--blue);
+      color: var(--white);
+      padding: 14px 32px;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      transition: background .2s;
+    }
+    .btn-primary:hover { background: var(--blue-light); }
+    .btn-outline {
+      background: transparent;
+      color: var(--white);
+      padding: 14px 32px;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      border: 2px solid rgba(255,255,255,.4);
+      cursor: pointer;
+      transition: border-color .2s, background .2s;
+    }
+    .btn-outline:hover { border-color: var(--white); background: rgba(255,255,255,.1); }
+    .hero-stats {
+      display: flex;
+      justify-content: center;
+      gap: 60px;
+      margin-top: 64px;
+      flex-wrap: wrap;
+    }
+    .stat { text-align: center; }
+    .stat-number { font-size: 2.2rem; font-weight: 800; color: var(--gold); }
+    .stat-label { font-size: .9rem; opacity: .7; margin-top: 4px; }
+
+    /* --- SECTIONS --- */
+    section { padding: 96px 24px; }
+    .section-inner { max-width: 1200px; margin: 0 auto; }
+    .section-header { text-align: center; margin-bottom: 60px; }
+    .section-header h2 { font-size: 2.2rem; font-weight: 700; color: var(--navy); margin-bottom: 12px; }
+    .section-header p { font-size: 1.1rem; color: var(--gray-600); max-width: 560px; margin: 0 auto; }
+
+    /* --- COVERAGE --- */
+    .coverage { background: var(--gray-50); }
+    .coverage-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 28px;
+    }
+    .coverage-card {
+      background: var(--white);
+      border-radius: 12px;
+      padding: 36px 28px;
+      box-shadow: 0 1px 3px rgba(0,0,0,.06);
+      transition: transform .2s, box-shadow .2s;
+    }
+    .coverage-card:hover { transform: translateY(-4px); box-shadow: 0 8px 24px rgba(0,0,0,.1); }
+    .coverage-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 12px;
+      background: #eef2ff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.6rem;
+      margin-bottom: 20px;
+    }
+    .coverage-card h3 { font-size: 1.15rem; color: var(--navy); margin-bottom: 10px; }
+    .coverage-card p { font-size: .95rem; color: var(--gray-600); }
+
+    /* --- PLANS --- */
+    .plans-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 28px;
+    }
+    .plan-card {
+      border: 2px solid var(--gray-200);
+      border-radius: 16px;
+      padding: 40px 32px;
+      position: relative;
+      transition: border-color .2s;
+    }
+    .plan-card:hover { border-color: var(--blue); }
+    .plan-card.featured {
+      border-color: var(--blue);
+      box-shadow: 0 8px 30px rgba(37,99,235,.15);
+    }
+    .plan-badge {
+      position: absolute;
+      top: -14px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--blue);
+      color: var(--white);
+      padding: 4px 18px;
+      border-radius: 20px;
+      font-size: .8rem;
+      font-weight: 600;
+      letter-spacing: .5px;
+    }
+    .plan-name { font-size: 1.1rem; font-weight: 600; color: var(--gray-600); margin-bottom: 8px; }
+    .plan-price { font-size: 2.6rem; font-weight: 800; color: var(--navy); }
+    .plan-price span { font-size: 1rem; font-weight: 500; color: var(--gray-600); }
+    .plan-desc { font-size: .95rem; color: var(--gray-600); margin: 16px 0 24px; }
+    .plan-features { list-style: none; margin-bottom: 32px; }
+    .plan-features li {
+      padding: 8px 0;
+      font-size: .95rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .plan-features li::before {
+      content: "\2713";
+      color: var(--blue);
+      font-weight: 700;
+      font-size: 1rem;
+    }
+    .plan-btn {
+      display: block;
+      width: 100%;
+      padding: 14px;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      text-align: center;
+      cursor: pointer;
+      border: 2px solid var(--blue);
+      background: var(--white);
+      color: var(--blue);
+      transition: background .2s, color .2s;
+    }
+    .plan-btn:hover, .plan-card.featured .plan-btn {
+      background: var(--blue);
+      color: var(--white);
+    }
+    .plan-card.featured .plan-btn:hover {
+      background: var(--blue-light);
+    }
+
+    /* --- WHY US --- */
+    .why-us { background: var(--gray-50); }
+    .why-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 36px;
+    }
+    .why-item { text-align: center; }
+    .why-icon {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      background: #eef2ff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      margin: 0 auto 18px;
+    }
+    .why-item h3 { font-size: 1.1rem; color: var(--navy); margin-bottom: 8px; }
+    .why-item p { font-size: .95rem; color: var(--gray-600); }
+
+    /* --- TESTIMONIALS --- */
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 28px;
+    }
+    .testimonial-card {
+      background: var(--gray-50);
+      border-radius: 12px;
+      padding: 32px;
+    }
+    .stars { color: var(--gold); font-size: 1.1rem; margin-bottom: 16px; letter-spacing: 2px; }
+    .testimonial-card blockquote {
+      font-size: 1rem;
+      color: var(--gray-700);
+      font-style: italic;
+      margin-bottom: 20px;
+      line-height: 1.7;
+    }
+    .testimonial-author { font-weight: 600; color: var(--navy); font-size: .95rem; }
+    .testimonial-role { font-size: .85rem; color: var(--gray-600); }
+
+    /* --- CTA --- */
+    .cta {
+      background: linear-gradient(135deg, var(--navy) 0%, #243b63 100%);
+      color: var(--white);
+      text-align: center;
+    }
+    .cta h2 { font-size: 2.2rem; font-weight: 700; margin-bottom: 16px; }
+    .cta p { font-size: 1.1rem; opacity: .8; max-width: 500px; margin: 0 auto 36px; }
+    .cta-buttons { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+    .cta-phone {
+      font-size: 1.3rem;
+      font-weight: 700;
+      margin-top: 28px;
+      display: inline-block;
+    }
+    .cta-phone span { opacity: .7; font-weight: 400; font-size: 1rem; }
+
+    /* --- FOOTER --- */
+    footer {
+      background: var(--gray-900);
+      color: rgba(255,255,255,.6);
+      padding: 64px 24px 32px;
+    }
+    .footer-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 40px;
+    }
+    .footer-brand .logo { color: var(--white); margin-bottom: 12px; }
+    .footer-brand p { font-size: .9rem; line-height: 1.7; }
+    footer h4 { color: var(--white); font-size: .95rem; margin-bottom: 16px; }
+    footer ul { list-style: none; }
+    footer ul li { margin-bottom: 10px; }
+    footer ul a { font-size: .9rem; transition: color .2s; }
+    footer ul a:hover { color: var(--white); }
+    .footer-bottom {
+      max-width: 1200px;
+      margin: 40px auto 0;
+      padding-top: 24px;
+      border-top: 1px solid rgba(255,255,255,.1);
+      text-align: center;
+      font-size: .85rem;
+    }
+
+    /* --- RESPONSIVE --- */
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .nav-cta { display: none; }
+      .menu-toggle { display: block; }
+      .lang-toggle { font-size: .75rem; }
+      .lang-toggle span { padding: 4px 10px; }
+      .hero h1 { font-size: 2.2rem; }
+      .hero-stats { gap: 32px; }
+      .footer-inner { grid-template-columns: 1fr 1fr; }
+      section { padding: 64px 24px; }
+    }
+    @media (max-width: 480px) {
+      .hero h1 { font-size: 1.8rem; }
+      .footer-inner { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-inner">
+      <div class="logo" data-i18n="brand">
+        <span class="shield">&#9641;</span> Daolan Cheng Insurance
+      </div>
+      <ul class="nav-links">
+        <li><a href="#coverage" data-i18n="nav_coverage">Coverage</a></li>
+        <li><a href="#plans" data-i18n="nav_plans">Plans</a></li>
+        <li><a href="#why-us" data-i18n="nav_why">Why Us</a></li>
+        <li><a href="#testimonials" data-i18n="nav_testimonials">Testimonials</a></li>
+        <li><a href="#contact" data-i18n="nav_contact">Contact</a></li>
+      </ul>
+      <div class="nav-right">
+        <button class="lang-toggle" onclick="toggleLang()" aria-label="Toggle language">
+          <span id="lang-en" class="active">EN</span>
+          <span id="lang-zh">中文</span>
+        </button>
+        <button class="nav-cta" data-i18n="nav_cta" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Get a Free Quote</button>
+        <button class="menu-toggle" aria-label="Toggle menu">&#9776;</button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <h1 data-i18n="hero_title">Protecting What Matters Most to You</h1>
+    <p data-i18n="hero_desc">Personalized insurance solutions for individuals, families, and businesses. Get the coverage you deserve at rates that fit your budget.</p>
+    <div class="hero-buttons">
+      <button class="btn-primary" data-i18n="hero_cta1" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Get a Free Quote</button>
+      <button class="btn-outline" data-i18n="hero_cta2" onclick="document.getElementById('coverage').scrollIntoView({behavior:'smooth'})">Explore Coverage</button>
+    </div>
+    <div class="hero-stats">
+      <div class="stat">
+        <div class="stat-number">15+</div>
+        <div class="stat-label" data-i18n="stat_years">Years of Experience</div>
+      </div>
+      <div class="stat">
+        <div class="stat-number">5,000+</div>
+        <div class="stat-label" data-i18n="stat_clients">Clients Served</div>
+      </div>
+      <div class="stat">
+        <div class="stat-number">50+</div>
+        <div class="stat-label" data-i18n="stat_carriers">Insurance Carriers</div>
+      </div>
+      <div class="stat">
+        <div class="stat-number">98%</div>
+        <div class="stat-label" data-i18n="stat_retention">Client Retention</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- COVERAGE -->
+  <section class="coverage" id="coverage">
+    <div class="section-inner">
+      <div class="section-header">
+        <h2 data-i18n="cov_title">Coverage Options</h2>
+        <p data-i18n="cov_desc">We offer comprehensive insurance solutions tailored to every stage of your life and business.</p>
+      </div>
+      <div class="coverage-grid">
+        <div class="coverage-card">
+          <div class="coverage-icon">&#128150;</div>
+          <h3 data-i18n="cov_life_t">Life Insurance</h3>
+          <p data-i18n="cov_life_d">Term and whole life policies to provide financial security for your loved ones when they need it most.</p>
+        </div>
+        <div class="coverage-card">
+          <div class="coverage-icon">&#9968;</div>
+          <h3 data-i18n="cov_health_t">Health Insurance</h3>
+          <p data-i18n="cov_health_d">Individual and family health plans including medical, dental, and vision with a wide network of providers.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PLANS -->
+  <section class="plans" id="plans">
+    <div class="section-inner">
+      <div class="section-header">
+        <h2 data-i18n="plan_title">Popular Plans</h2>
+        <p data-i18n="plan_desc">Choose from our most popular bundled plans or contact us for a fully customized package.</p>
+      </div>
+      <div class="plans-grid">
+        <!-- Essential -->
+        <div class="plan-card">
+          <div class="plan-name" data-i18n="plan1_name">Essential</div>
+          <div class="plan-price">$89<span>/mo</span></div>
+          <p class="plan-desc" data-i18n="plan1_desc">Basic protection for individuals starting out.</p>
+          <ul class="plan-features">
+            <li data-i18n="plan1_f1">Auto liability coverage</li>
+            <li data-i18n="plan1_f2">Renters insurance</li>
+            <li data-i18n="plan1_f3">Basic life insurance ($50K)</li>
+            <li data-i18n="plan1_f4">24/7 claims support</li>
+            <li data-i18n="plan1_f5">Online account management</li>
+          </ul>
+          <button class="plan-btn" data-i18n="plan_btn">Get Started</button>
+        </div>
+        <!-- Family -->
+        <div class="plan-card featured">
+          <div class="plan-badge" data-i18n="plan_badge">MOST POPULAR</div>
+          <div class="plan-name" data-i18n="plan2_name">Family Shield</div>
+          <div class="plan-price">$215<span>/mo</span></div>
+          <p class="plan-desc" data-i18n="plan2_desc">Comprehensive coverage for your entire family.</p>
+          <ul class="plan-features">
+            <li data-i18n="plan2_f1">Full auto coverage (2 vehicles)</li>
+            <li data-i18n="plan2_f2">Homeowners insurance</li>
+            <li data-i18n="plan2_f3">Term life insurance ($250K)</li>
+            <li data-i18n="plan2_f4">Family health plan</li>
+            <li data-i18n="plan2_f5">Umbrella policy ($1M)</li>
+            <li data-i18n="plan2_f6">Dedicated agent support</li>
+          </ul>
+          <button class="plan-btn" data-i18n="plan_btn">Get Started</button>
+        </div>
+        <!-- Business -->
+        <div class="plan-card">
+          <div class="plan-name" data-i18n="plan3_name">Business Pro</div>
+          <div class="plan-price">$349<span>/mo</span></div>
+          <p class="plan-desc" data-i18n="plan3_desc">All-in-one protection for small businesses.</p>
+          <ul class="plan-features">
+            <li data-i18n="plan3_f1">General liability ($2M)</li>
+            <li data-i18n="plan3_f2">Commercial property</li>
+            <li data-i18n="plan3_f3">Workers' compensation</li>
+            <li data-i18n="plan3_f4">Professional liability (E&O)</li>
+            <li data-i18n="plan3_f5">Commercial auto</li>
+            <li data-i18n="plan3_f6">Cyber liability coverage</li>
+          </ul>
+          <button class="plan-btn" data-i18n="plan_btn">Get Started</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY US -->
+  <section class="why-us" id="why-us">
+    <div class="section-inner">
+      <div class="section-header">
+        <h2 data-i18n="why_title">Why Choose Daolan Cheng</h2>
+        <p data-i18n="why_desc">I go beyond policies. I build lasting relationships based on trust and personalized service.</p>
+      </div>
+      <div class="why-grid">
+        <div class="why-item">
+          <div class="why-icon">&#128101;</div>
+          <h3 data-i18n="why1_t">Independent Broker</h3>
+          <p data-i18n="why1_d">I work with 50+ carriers to shop the best rates for you, not just one company.</p>
+        </div>
+        <div class="why-item">
+          <div class="why-icon">&#128222;</div>
+          <h3 data-i18n="why2_t">Personal Service</h3>
+          <p data-i18n="why2_d">Talk to a real person every time. I know my clients by name and provide hands-on guidance.</p>
+        </div>
+        <div class="why-item">
+          <div class="why-icon">&#9889;</div>
+          <h3 data-i18n="why3_t">Fast Claims</h3>
+          <p data-i18n="why3_d">I advocate on your behalf to get claims resolved quickly and fairly.</p>
+        </div>
+        <div class="why-item">
+          <div class="why-icon">&#128176;</div>
+          <h3 data-i18n="why4_t">Competitive Rates</h3>
+          <p data-i18n="why4_d">Save an average of 20% when you bundle policies through my agency.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section class="testimonials" id="testimonials">
+    <div class="section-inner">
+      <div class="section-header">
+        <h2 data-i18n="test_title">What My Clients Say</h2>
+        <p data-i18n="test_desc">Don't just take my word for it. Hear from the people I've helped protect.</p>
+      </div>
+      <div class="testimonials-grid">
+        <div class="testimonial-card">
+          <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+          <blockquote data-i18n="test1_q">"Daolan saved us over $1,200 a year by bundling our home and auto policies. The process was effortless and the service is outstanding."</blockquote>
+          <div class="testimonial-author" data-i18n="test1_name">Sarah & James Mitchell</div>
+          <div class="testimonial-role" data-i18n="test1_role">Homeowners, clients since 2019</div>
+        </div>
+        <div class="testimonial-card">
+          <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+          <blockquote data-i18n="test2_q">"When my business had a water damage claim, Daolan handled everything. I could focus on my work while she took care of the rest."</blockquote>
+          <div class="testimonial-author" data-i18n="test2_name">David Li</div>
+          <div class="testimonial-role" data-i18n="test2_role">Small Business Owner</div>
+        </div>
+        <div class="testimonial-card">
+          <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+          <blockquote data-i18n="test3_q">"I finally understand my coverage thanks to Daolan. She took the time to explain every option and helped me choose what's right for my family."</blockquote>
+          <div class="testimonial-author" data-i18n="test3_name">Maria Rodriguez</div>
+          <div class="testimonial-role" data-i18n="test3_role">Family Shield plan member</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA / CONTACT -->
+  <section class="cta" id="contact">
+    <div class="section-inner">
+      <h2 data-i18n="cta_title">Ready to Get Protected?</h2>
+      <p data-i18n="cta_desc">Get a free, no-obligation quote in minutes. I'm standing by to help you find the perfect coverage.</p>
+      <div class="cta-buttons">
+        <button class="btn-primary" data-i18n="cta_btn1" style="padding:16px 40px; font-size:1.1rem;">Request a Free Quote</button>
+        <button class="btn-outline" data-i18n="cta_btn2" style="padding:16px 40px; font-size:1.1rem;">Schedule a Consultation</button>
+      </div>
+      <div class="cta-phone">
+        <span data-i18n="cta_call">Or call me directly:</span><br>
+        (555) 432-7890
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <div class="logo" data-i18n="brand">
+          <span class="shield">&#9641;</span> Daolan Cheng Insurance
+        </div>
+        <p data-i18n="footer_about">Licensed independent insurance broker proudly serving our community since 2010. I'm here to help you protect what matters most.</p>
+      </div>
+      <div>
+        <h4 data-i18n="nav_coverage">Coverage</h4>
+        <ul>
+          <li><a href="#coverage" data-i18n="cov_life_t">Life</a></li>
+          <li><a href="#coverage" data-i18n="cov_health_t">Health</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 data-i18n="foot_company">Company</h4>
+        <ul>
+          <li><a href="#why-us" data-i18n="foot_about">About Me</a></li>
+          <li><a href="#testimonials" data-i18n="foot_reviews">Reviews</a></li>
+          <li><a href="#contact" data-i18n="foot_contact_link">Contact</a></li>
+          <li><a href="#contact" data-i18n="foot_blog">Blog</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 data-i18n="nav_contact">Contact</h4>
+        <ul>
+          <li>(555) 432-7890</li>
+          <li>daolan@daolancheng.com</li>
+          <li>123 Main Street, Suite 200</li>
+          <li>Springfield, IL 62701</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom" data-i18n="footer_copy">
+      &copy; 2026 Daolan Cheng Insurance. All rights reserved. | <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a>
+    </div>
+  </footer>
+
+  <script>
+    var currentLang = 'en';
+
+    var translations = {
+      zh: {
+        // Nav
+        nav_coverage: '保障范围',
+        nav_plans: '保险计划',
+        nav_why: '为什么选我',
+        nav_testimonials: '客户评价',
+        nav_contact: '联系我',
+        nav_cta: '免费获取报价',
+
+        // Hero
+        hero_title: '守护您最珍贵的一切',
+        hero_desc: '为个人、家庭和企业量身定制保险方案。以适合您预算的价格，获得您应得的保障。',
+        hero_cta1: '免费获取报价',
+        hero_cta2: '了解保障范围',
+        stat_years: '年从业经验',
+        stat_clients: '服务客户',
+        stat_carriers: '合作保险公司',
+        stat_retention: '客户续保率',
+
+        // Coverage
+        cov_title: '保障范围',
+        cov_desc: '我提供全面的保险解决方案，覆盖您生活和事业的每个阶段。',
+        cov_life_t: '人寿保险',
+        cov_life_d: '定期和终身寿险保单，在您的亲人最需要时为他们提供财务保障。',
+        cov_health_t: '健康保险',
+        cov_health_d: '个人和家庭健康计划，涵盖医疗、牙科和视力保障，拥有广泛的医疗网络。',
+
+        // Plans
+        plan_title: '热门计划',
+        plan_desc: '选择我们最受欢迎的组合计划，或联系我获取完全定制的方案。',
+        plan1_name: '基础版',
+        plan1_desc: '为刚起步的个人提供的基本保障。',
+        plan1_f1: '汽车责任险',
+        plan1_f2: '租房保险',
+        plan1_f3: '基本人寿保险（$50K）',
+        plan1_f4: '7×24小时理赔支持',
+        plan1_f5: '在线账户管理',
+        plan_btn: '立即开始',
+        plan_badge: '最受欢迎',
+        plan2_name: '家庭守护',
+        plan2_desc: '为您全家提供的全面保障。',
+        plan2_f1: '全面汽车保障（2辆车）',
+        plan2_f2: '房屋保险',
+        plan2_f3: '定期人寿保险（$250K）',
+        plan2_f4: '家庭健康计划',
+        plan2_f5: '超额责任保单（$1M）',
+        plan2_f6: '专属经纪人服务',
+        plan3_name: '商业专业版',
+        plan3_desc: '为小型企业提供的一站式保障。',
+        plan3_f1: '一般责任险（$2M）',
+        plan3_f2: '商业财产险',
+        plan3_f3: '工伤赔偿险',
+        plan3_f4: '职业责任险（E&O）',
+        plan3_f5: '商业汽车险',
+        plan3_f6: '网络安全责任险',
+
+        // Why Us
+        why_title: '为什么选择程道兰',
+        why_desc: '我不仅提供保单，更致力于建立基于信任和个性化服务的长期关系。',
+        why1_t: '独立经纪人',
+        why1_d: '我与50多家保险公司合作，为您货比三家，不局限于单一公司。',
+        why2_t: '贴心服务',
+        why2_d: '每次都能和真人沟通。我了解每一位客户，提供一对一的专业指导。',
+        why3_t: '快速理赔',
+        why3_d: '我会代表您全力争取，确保理赔快速公正地得到解决。',
+        why4_t: '优惠费率',
+        why4_d: '通过我捆绑保单，平均可节省20%的保费。',
+
+        // Testimonials
+        test_title: '客户怎么说',
+        test_desc: '不要只听我说——听听我帮助保护过的客户们的真实感受。',
+        test1_q: '"道兰帮我们通过捆绑房屋和汽车保单，每年节省了超过$1,200。整个过程非常轻松，服务非常出色。"',
+        test1_name: 'Sarah & James Mitchell',
+        test1_role: '房屋业主，2019年起的客户',
+        test2_q: '"我的生意遭遇水损理赔时，道兰处理了一切。我可以专注于工作，她把其他事情都安排好了。"',
+        test2_name: 'David Li',
+        test2_role: '小企业主',
+        test3_q: '"多亏了道兰，我终于理解了我的保障内容。她耐心地解释了每一个选项，帮我选择了最适合家庭的方案。"',
+        test3_name: 'Maria Rodriguez',
+        test3_role: '家庭守护计划会员',
+
+        // CTA
+        cta_title: '准备好获得保障了吗？',
+        cta_desc: '几分钟内即可获得免费、无义务的报价。我随时准备帮您找到最合适的保障方案。',
+        cta_btn1: '申请免费报价',
+        cta_btn2: '预约咨询',
+        cta_call: '或直接致电：',
+
+        // Footer
+        brand: '<span class="shield">&#9641;</span> 程道兰保险服务',
+        footer_about: '持牌独立保险经纪人，自2010年起服务社区。我致力于帮助您守护最重要的一切。',
+        foot_company: '公司',
+        foot_about: '关于我',
+        foot_reviews: '客户评价',
+        foot_contact_link: '联系方式',
+        foot_blog: '博客',
+        footer_copy: '&copy; 2026 程道兰保险服务 版权所有 | <a href="#">隐私政策</a> | <a href="#">服务条款</a>'
+      },
+      en: {
+        nav_coverage: 'Coverage',
+        nav_plans: 'Plans',
+        nav_why: 'Why Us',
+        nav_testimonials: 'Testimonials',
+        nav_contact: 'Contact',
+        nav_cta: 'Get a Free Quote',
+        hero_title: 'Protecting What Matters Most to You',
+        hero_desc: 'Personalized insurance solutions for individuals, families, and businesses. Get the coverage you deserve at rates that fit your budget.',
+        hero_cta1: 'Get a Free Quote',
+        hero_cta2: 'Explore Coverage',
+        stat_years: 'Years of Experience',
+        stat_clients: 'Clients Served',
+        stat_carriers: 'Insurance Carriers',
+        stat_retention: 'Client Retention',
+        cov_title: 'Coverage Options',
+        cov_desc: 'We offer comprehensive insurance solutions tailored to every stage of your life and business.',
+        cov_life_t: 'Life Insurance',
+        cov_life_d: 'Term and whole life policies to provide financial security for your loved ones when they need it most.',
+        cov_health_t: 'Health Insurance',
+        cov_health_d: 'Individual and family health plans including medical, dental, and vision with a wide network of providers.',
+        plan_title: 'Popular Plans',
+        plan_desc: 'Choose from our most popular bundled plans or contact us for a fully customized package.',
+        plan1_name: 'Essential',
+        plan1_desc: 'Basic protection for individuals starting out.',
+        plan1_f1: 'Auto liability coverage',
+        plan1_f2: 'Renters insurance',
+        plan1_f3: 'Basic life insurance ($50K)',
+        plan1_f4: '24/7 claims support',
+        plan1_f5: 'Online account management',
+        plan_btn: 'Get Started',
+        plan_badge: 'MOST POPULAR',
+        plan2_name: 'Family Shield',
+        plan2_desc: 'Comprehensive coverage for your entire family.',
+        plan2_f1: 'Full auto coverage (2 vehicles)',
+        plan2_f2: 'Homeowners insurance',
+        plan2_f3: 'Term life insurance ($250K)',
+        plan2_f4: 'Family health plan',
+        plan2_f5: 'Umbrella policy ($1M)',
+        plan2_f6: 'Dedicated agent support',
+        plan3_name: 'Business Pro',
+        plan3_desc: 'All-in-one protection for small businesses.',
+        plan3_f1: 'General liability ($2M)',
+        plan3_f2: 'Commercial property',
+        plan3_f3: 'Workers\' compensation',
+        plan3_f4: 'Professional liability (E&O)',
+        plan3_f5: 'Commercial auto',
+        plan3_f6: 'Cyber liability coverage',
+        why_title: 'Why Choose Daolan Cheng',
+        why_desc: 'I go beyond policies. I build lasting relationships based on trust and personalized service.',
+        why1_t: 'Independent Broker',
+        why1_d: 'I work with 50+ carriers to shop the best rates for you, not just one company.',
+        why2_t: 'Personal Service',
+        why2_d: 'Talk to a real person every time. I know my clients by name and provide hands-on guidance.',
+        why3_t: 'Fast Claims',
+        why3_d: 'I advocate on your behalf to get claims resolved quickly and fairly.',
+        why4_t: 'Competitive Rates',
+        why4_d: 'Save an average of 20% when you bundle policies through my agency.',
+        test_title: 'What My Clients Say',
+        test_desc: 'Don\'t just take my word for it. Hear from the people I\'ve helped protect.',
+        test1_q: '\u201CDaolan saved us over $1,200 a year by bundling our home and auto policies. The process was effortless and the service is outstanding.\u201D',
+        test1_name: 'Sarah & James Mitchell',
+        test1_role: 'Homeowners, clients since 2019',
+        test2_q: '\u201CWhen my business had a water damage claim, Daolan handled everything. I could focus on my work while she took care of the rest.\u201D',
+        test2_name: 'David Li',
+        test2_role: 'Small Business Owner',
+        test3_q: '\u201CI finally understand my coverage thanks to Daolan. She took the time to explain every option and helped me choose what\u2019s right for my family.\u201D',
+        test3_name: 'Maria Rodriguez',
+        test3_role: 'Family Shield plan member',
+        cta_title: 'Ready to Get Protected?',
+        cta_desc: 'Get a free, no-obligation quote in minutes. I\'m standing by to help you find the perfect coverage.',
+        cta_btn1: 'Request a Free Quote',
+        cta_btn2: 'Schedule a Consultation',
+        cta_call: 'Or call me directly:',
+        brand: '<span class="shield">&#9641;</span> Daolan Cheng Insurance',
+        footer_about: 'Licensed independent insurance broker proudly serving our community since 2010. I\'m here to help you protect what matters most.',
+        foot_company: 'Company',
+        foot_about: 'About Me',
+        foot_reviews: 'Reviews',
+        foot_contact_link: 'Contact',
+        foot_blog: 'Blog',
+        footer_copy: '&copy; 2026 Daolan Cheng Insurance. All rights reserved. | <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a>'
+      }
+    };
+
+    function setLanguage(lang) {
+      currentLang = lang;
+      document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
+      document.getElementById('lang-en').classList.toggle('active', lang === 'en');
+      document.getElementById('lang-zh').classList.toggle('active', lang === 'zh');
+
+      var dict = translations[lang];
+      var els = document.querySelectorAll('[data-i18n]');
+      for (var i = 0; i < els.length; i++) {
+        var key = els[i].getAttribute('data-i18n');
+        if (dict[key] !== undefined) {
+          els[i].innerHTML = dict[key];
+        }
+      }
+
+      document.title = lang === 'zh'
+        ? '程道兰保险服务 | 您信赖的保险经纪人'
+        : 'Daolan Cheng Insurance | Your Trusted Insurance Broker';
+    }
+
+    function toggleLang() {
+      setLanguage(currentLang === 'en' ? 'zh' : 'en');
+    }
+  </script>
+
+</body>
+</html>
